@@ -12,23 +12,27 @@ import json
 from bs4 import BeautifulSoup
 
 def main():
-  html = open("bettopsport.html", encoding='utf8')
+  html = open("betfair.html", encoding='utf8')
   soup = BeautifulSoup(html, "html.parser")
 
-  pl = soup.findAll("tr", "offers_line event-filter-all")
-  for p in pl:
-    name = p.find("td", "betsPrefix").find(text=True)
-    points = p.findAll("span", "fora")[0].find(text=True)
-    odds = p.findAll("div", "pull-right rate")
-    if len(odds) < 3:
-      continue
-    odd1 = odds[0].find(text=True)
-    odd2 = odds[2].find(text=True)
-    print(name)
-    print(points)
-    print(odd1)
-    print(odd2)
-    print()
+  pll = soup.findAll("div", "mod yui3-widget yui3-module yui3-minimarketview")
+  for p in pll:
+    player = p.find("span", text = re.compile(".*Total Points $"), attrs =  {"class": "title"})
+    if player:
+      printSoup(player)
+      printOther(p)
+
+def printOther(p):
+  pp = p.findAll("li", attrs={'class': "runner-item"})
+  for bla in pp:
+    printOdd(bla)
+
+def printOdd(bla):
+  spans = bla.findAll("span")
+  points = spans[2].find(text=True)
+  odd = spans[1].find(text=True)
+  print(points)
+  print(odd)
 
 def printSoup(soup):
   for a in soup:
