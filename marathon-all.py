@@ -19,8 +19,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 def getDates(html):
   soup = BeautifulSoup(html, "html.parser")
   pl = soup.findAll("td", "date")
+  out = []
   for p in pl:
-    yield p.find(text=True)
+    out.append( p.find(text=True))
+  return out
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -33,16 +35,20 @@ def selenium():
     out = []
     for e in elements[::2]:
       e.click()
-    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
-    return (dates, browser.page_source)
+      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
+      out.append(browser.page_source)
+      e.click()
+    return (dates, out)
 
 def main():
-  dates, html = selenium()
-  print(dates)
-  exit()
-  
-  soup = BeautifulSoup(html, "html.parser")
+  dates, htmls = selenium()
+  for date, html in zip(dates, htmls):
+    print(date)
+    processGame(html)
+    print()
 
+def processGame(html):
+  soup = BeautifulSoup(html, "html.parser")
   pl = soup.findAll("td", "price width30")
   for a in pl:
     text = a["data-sel"]
