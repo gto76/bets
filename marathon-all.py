@@ -16,19 +16,31 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+def getDates(html):
+  soup = BeautifulSoup(html, "html.parser")
+  pl = soup.findAll("td", "date")
+  for p in pl:
+    yield p.find(text=True)
+
 def selenium():
   with closing(Firefox()) as browser:
     browser.get('https://www.marathonbet.com/hr/betting/Basketball/NBA/')
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
+
+    dates = getDates(browser.page_source)
+
     elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
     out = []
     for e in elements[::2]:
       e.click()
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
-    return browser.page_source
+    return (dates, browser.page_source)
 
 def main():
-  html = selenium()
+  dates, html = selenium()
+  print(dates)
+  exit()
+  
   soup = BeautifulSoup(html, "html.parser")
 
   pl = soup.findAll("td", "price width30")
