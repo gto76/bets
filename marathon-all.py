@@ -3,9 +3,9 @@
 # Usage: favbet.py 
 # https://www.favbet.com/en/bets/#tour=17745&event=4198442
 
+import json
 import os
 import sys
-import json
 
 from bs4 import BeautifulSoup
 from contextlib import closing
