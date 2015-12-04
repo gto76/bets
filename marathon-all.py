@@ -23,10 +23,20 @@ def selenium():
     browser.find_element_by_xpath("//div[@class='member-name nowrap ']").click()
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
     return browser.page_source
-    
+  
+def seleniumAll():
+  with closing(Firefox()) as browser:
+    browser.get('https://www.marathonbet.com/hr/betting/Basketball/NBA/')
+    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
+    elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
+    for e in elements:
+      e.click()
+      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
+      yield browser.page_source
+
 def main():
-  html = selenium()
-  soup = BeautifulSoup(html, "html.parser")
+  htmls = seleniumAll()
+  soup = BeautifulSoup(htmls[0], "html.parser")
 
   pl = soup.findAll("td", "price width30")
   for a in pl:
