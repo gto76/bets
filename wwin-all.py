@@ -19,7 +19,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 def selenium():
   with closing(Firefox()) as browser:
-    browser.wait = WebDriverWait(browser, 2)
     browser.get('https://wwin.com/sports/default.aspx?t=-60#f/0/110/0/')
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='item'][@fullok='430']")))
     element = browser.find_element_by_xpath("//div[@class='item'][@fullok='430']")

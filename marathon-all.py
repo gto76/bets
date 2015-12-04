@@ -16,21 +16,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
-def getDates(html):
-  soup = BeautifulSoup(html, "html.parser")
-  pl = soup.findAll("td", "date")
-  out = []
-  for p in pl:
-    out.append( p.find(text=True))
-  return out
+def main():
+  dates, htmls = selenium()
+  for date, html in zip(dates, htmls):
+    print(date)
+    processGame(html)
+    print()
 
 def selenium():
   with closing(Firefox()) as browser:
     browser.get('https://www.marathonbet.com/hr/betting/Basketball/NBA/')
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
-
     dates = getDates(browser.page_source)
-
     elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
     out = []
     for e in elements[::2]:
@@ -40,13 +37,14 @@ def selenium():
       e.click()
     return (dates, out)
 
-def main():
-  dates, htmls = selenium()
-  for date, html in zip(dates, htmls):
-    print(date)
-    processGame(html)
-    print()
-
+def getDates(html):
+  soup = BeautifulSoup(html, "html.parser")
+  pl = soup.findAll("td", "date")
+  out = []
+  for p in pl:
+    out.append( p.find(text=True))
+  return out
+  
 def processGame(html):
   soup = BeautifulSoup(html, "html.parser")
   pl = soup.findAll("td", "price width30")
