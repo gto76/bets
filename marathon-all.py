@@ -7,36 +7,29 @@ import os
 import sys
 import json
 
+from bs4 import BeautifulSoup
 from contextlib import closing
-from selenium.webdriver import Firefox # pip install selenium
-from selenium.webdriver import Chrome # pip install selenium
+from selenium.webdriver import Firefox 
+from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from bs4 import BeautifulSoup
 
 def selenium():
   with closing(Firefox()) as browser:
     browser.get('https://www.marathonbet.com/hr/betting/Basketball/NBA/')
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
-    browser.find_element_by_xpath("//div[@class='member-name nowrap ']").click()
+    elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
+    out = []
+    for e in elements[::2]:
+      e.click()
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
     return browser.page_source
-  
-def seleniumAll():
-  with closing(Firefox()) as browser:
-    browser.get('https://www.marathonbet.com/hr/betting/Basketball/NBA/')
-    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
-    elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
-    for e in elements:
-      e.click()
-      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
-      yield browser.page_source
 
 def main():
-  htmls = seleniumAll()
-  soup = BeautifulSoup(htmls[0], "html.parser")
+  html = selenium()
+  soup = BeautifulSoup(html, "html.parser")
 
   pl = soup.findAll("td", "price width30")
   for a in pl:
