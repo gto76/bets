@@ -10,8 +10,8 @@ import sys
 
 from bs4 import BeautifulSoup
 from contextlib import closing
-from selenium.webdriver import Firefox # pip install selenium
-from selenium.webdriver import Chrome # pip install selenium
+from selenium.webdriver import Firefox
+from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By

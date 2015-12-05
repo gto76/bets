@@ -6,6 +6,7 @@
 import json
 import os
 import sys
+from pprint import pprint
 
 from bs4 import BeautifulSoup
 from contextlib import closing
@@ -16,12 +17,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+BOOKIE_NAME =
+BOOKIE_URL = 
+
+class Player:
+  pass
+
 def main():
   dates, htmls = selenium()
+  players = []
   for date, html in zip(dates, htmls):
-    print(date)
-    processGame(html)
-    print()
+    players.extend(getPlayers(html, date))
+  for p in players:
+    pprint (vars(p))
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -45,16 +53,25 @@ def getDates(html):
     out.append( p.find(text=True))
   return out
   
-def processGame(html):
+def getPlayers(html, date):
   soup = BeautifulSoup(html, "html.parser")
+  players = []
   pl = soup.findAll("td", "price width30")
-  for a in pl:
-    text = a["data-sel"]
-    resp = json.loads(text)
-    print(resp["mn"])
-    print(resp["sn"])
-    print(resp["epr"])
-    print()
+  for a, b in pairwise(pl):
+    player = Player()
+    respA = json.loads(a["data-sel"])
+    player.player_name = respA["mn"]
+    player.player_total = respA["sn"]
+    player.under = respA["epr"]
+    respB = json.loads(b["data-sel"])
+    player.over = respB["epr"]
+    player.start_time = date
+    players.append(player)
+  return players
+
+def pairwise(t):
+    it = iter(t)
+    return zip(it,it)
 
 def printSoup(soup):
   for a in soup:
