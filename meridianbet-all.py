@@ -17,33 +17,48 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
-def main():
-  html = selenium()
-  soup = BeautifulSoup(html, "html.parser")
+import util
 
+BOOKIE_NAME = "Meridianbet"
+BOOKIE_URL = "https://meridianbet.com/#!standard_betting;leagueIDs=593"
+TEST_FILE = "meridianbet.html"
+
+def main():
+  if len(sys.argv) > 1:
+    html = open(TEST_FILE, encoding='utf8')
+  else:
+    html = selenium()
+  players = getPlayers(html)
+  util.printPlayers(players)
+
+def selenium():
+  with closing(Firefox()) as browser:
+    browser.get(BOOKIE_URL)
+    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='gwt-Label home']")))
+    return browser.page_source
+
+def getPlayers(html):
+  soup = BeautifulSoup(html, "html.parser")
   dates = soup.findAll("div", "gwt-Label date")
   times = soup.findAll("div", "gwt-Label time")
   pl = soup.findAll("div", "rivals")
   pa = soup.findAll("div", "selections three four")
-
+  players = []
   for date, time, a, b in zip(dates, times, pl, pa):
-    name = a.find("div", "gwt-Label away").find(text=True)
-    odds = b.findAll("div", "gwt-Label")
-    print(date.find(text=True)+" "+time.find(text=True)+" "+name)
-    for odd in odds:
-      print(odd.find(text=True))
-    print()
+    players.append(getPlayer(date, time, a, b))
+  return players
 
-def selenium():
-  with closing(Firefox()) as browser:
-    browser.get('https://meridianbet.com/#!standard_betting;leagueIDs=593')
-    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='gwt-Label home']")))
-    return browser.page_source
-
-def printSoup(soup):
-  for a in soup:
-    print(a)
-    print()
+def getPlayer(date, time, a, b):
+  odds = b.findAll("div", "gwt-Label")
+  player = util.Player()
+  player.player_name = a.find("div", "gwt-Label away").find(text=True)
+  player.player_total = odds[7].find(text=True)
+  player.under = odds[1].find(text=True)
+  player.over = odds[5].find(text=True)
+  player.start_time = date.find(text=True)+" "+time.find(text=True)
+  player.bookie_name = BOOKIE_NAME
+  player.bookie_url = BOOKIE_URL
+  return player
 
 if __name__ == '__main__':
   main()
