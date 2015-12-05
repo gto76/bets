@@ -18,11 +18,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+import util
+
 BOOKIE_NAME = "Marathonbet"
 BOOKIE_URL = "https://www.marathonbet.com/hr/betting/Basketball/NBA/"
-
-class Player:
-  pass
 
 def main():
   dates, htmls = selenium()
@@ -32,12 +31,7 @@ def main():
   for date, html in zip(dates, htmls):
     date = cleanDate(date)
     players.extend(getPlayers(html, date))
-  for p in players:
-    pprint (vars(p))
-
-def cleanDate(date):
-  date = re.sub("^\n *", "", date)
-  return re.sub("\n *$", "", date)
+  util.printPlayers(players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -65,8 +59,8 @@ def getPlayers(html, date):
   soup = BeautifulSoup(html, "html.parser")
   players = []
   pl = soup.findAll("td", "price width30")
-  for a, b in pairwise(pl):
-    player = Player()
+  for a, b in util.pairwise(pl):
+    player = util.Player()
     respA = json.loads(a["data-sel"])
     player.player_name = cleanName(respA["mn"])
     player.player_total = cleanPoints(respA["sn"])
@@ -79,21 +73,16 @@ def getPlayers(html, date):
     players.append(player)
   return players
 
+def cleanDate(date):
+  date = re.sub("^\n *", "", date)
+  return re.sub("\n *$", "", date)
+
 def cleanName(name):
   name = re.sub("Points \(", "", name)
   return re.sub("[,)]", "", name)
 
 def cleanPoints(points):
   return re.sub("^[^0-9]*", "", points)
-
-def pairwise(t):
-    it = iter(t)
-    return zip(it,it)
-
-def printSoup(soup):
-  for a in soup:
-    print(a)
-    print()
 
 if __name__ == '__main__':
   main()

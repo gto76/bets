@@ -10,23 +10,31 @@ import sys
 
 from bs4 import BeautifulSoup
 from contextlib import closing
-from selenium.webdriver import Firefox # pip install selenium
-from selenium.webdriver import Chrome # pip install selenium
+from selenium.webdriver import Firefox
+from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+import util
+
+BOOKIE_NAME = "Favbet"
+BOOKIE_URL = "https://www.favbet.com/en/bets/#tour=17745"
+
 def main():
   dates, htmls = selenium()
+  # dates = ['\n   06 pro 02:30\n    ']
+  # htmls = [open("favbet.html", encoding='utf8')]
+  players = []
   for date, html in zip(dates, htmls):
-    print(date)
-    processGame(html)
-    print()
+    date = cleanDate(date)
+    players.extend(getPlayers(html, date))
+  util.printPlayers(players)
 
 def selenium():
   with closing(Firefox()) as browser:
-    browser.get('https://www.favbet.com/en/bets/#tour=17745')
+    browser.get(BOOKIE_URL)
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//b[@class='ttt']")))
     (links, dates) = getLinksAndDates(browser.page_source)
     htmls = []
@@ -49,15 +57,37 @@ def getLinksAndDates(html):
     dates.append(date)
   return (links, dates)
 
-def processGame(html):
+def getPlayers(html, date):
   soup = BeautifulSoup(html, "html.parser")
   pl = soup.find("li", {"data-clue" : "Over/Under points (player)"})
+  players = []
   names = pl.findAll("span", "bets_oc ttt")
   odds = pl.findAll("button", "betbut a")
-  for a, b in zip(names, odds):
-    print(a.find(text=True))
-    print(b.find(text=True))
-    print()
+  for a, b in util.pairwise(zip(names, odds)):
+    player = util.Player()
+    player.player_name = cleanName(a[0].find(text=True))
+    player.player_total = cleanPoints(a[0].find(text=True))
+    player.under = a[1].find(text=True)
+    player.over = b[1].find(text=True)
+    player.start_time = date
+    player.bookie_name = BOOKIE_NAME
+    player.bookie_url = BOOKIE_URL
+    players.append(player)
+  return players
+
+def cleanDate(date):
+  # date = re.sub("^\n *", "", date)
+  # return re.sub("\n *$", "", date)
+  return date
+  
+def cleanName(name):
+  name = re.sub("^Over [0-9()\. ]*", "", name)
+  names = name.split(' ')
+  return names[1] + " " + names[0]
+
+def cleanPoints(points):
+  points = re.sub("^.*\(", "", points)
+  return re.sub("\).*$", "", points)
 
 if __name__ == '__main__':
   main()
