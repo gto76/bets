@@ -11,7 +11,6 @@ import sys
 from bs4 import BeautifulSoup
 from contextlib import closing
 from selenium.webdriver import Firefox
-from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -24,12 +23,24 @@ BOOKIE_URL = "https://meridianbet.com/#!standard_betting;leagueIDs=593"
 TEST_FILE = "meridianbet.html"
 
 def main():
-  if len(sys.argv) > 1:
-    html = open(TEST_FILE, encoding='utf8')
-  else:
-    html = selenium()
+  html = getHtml(sys.argv)
   players = getPlayers(html)
   util.printPlayers(players)
+
+def getHtml(argv):
+  if len(argv) > 1:
+    if argv[1] != "save":
+      return open(TEST_FILE, encoding='utf8')
+    else:
+      save()
+  return selenium()
+
+def save():
+  html = selenium()
+  f = open(TEST_FILE,'w')
+  f.write(html)
+  f.close()
+  exit(0)
 
 def selenium():
   with closing(Firefox()) as browser:

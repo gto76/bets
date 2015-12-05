@@ -7,12 +7,10 @@ import json
 import os
 import re
 import sys
-from pprint import pprint
 
 from bs4 import BeautifulSoup
 from contextlib import closing
 from selenium.webdriver import Firefox 
-from selenium.webdriver import Chrome
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -22,16 +20,21 @@ import util
 
 BOOKIE_NAME = "Marathonbet"
 BOOKIE_URL = "https://www.marathonbet.com/hr/betting/Basketball/NBA/"
+TEST_FILE = "marathonbet.html"
 
 def main():
-  dates, htmls = selenium()
-  # dates = ['\n   06 pro 02:30\n    ']
-  # htmls = [open("marathonbet.html", encoding='utf8')]
+  dates, htmls = getHtml(sys.argv)
   players = []
   for date, html in zip(dates, htmls):
     date = cleanDate(date)
     players.extend(getPlayers(html, date))
   util.printPlayers(players)
+
+def getHtml(argv):
+  if len(argv) > 1:
+    return (['\n   06 pro 02:30\n    '], [open(TEST_FILE, encoding='utf8')])
+  else:
+    return selenium()
 
 def selenium():
   with closing(Firefox()) as browser:
