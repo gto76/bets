@@ -5,6 +5,7 @@
 
 import json
 import os
+import re
 import sys
 from pprint import pprint
 
@@ -25,6 +26,8 @@ class Player:
 
 def main():
   dates, htmls = selenium()
+  # dates = ['\n   06 pro 02:30\n    ']
+  # htmls = [open("marathonbet.html", encoding='utf8')]
   players = []
   for date, html in zip(dates, htmls):
     date = cleanDate(date)
@@ -77,7 +80,7 @@ def getPlayers(html, date):
   return players
 
 def cleanName(name):
-  name = re.sub("Points( ", "", name)
+  name = re.sub("Points \(", "", name)
   return re.sub("[,)]", "", name)
 
 def cleanPoints(points):
