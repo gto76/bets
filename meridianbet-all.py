@@ -39,14 +39,6 @@ def selenium():
     browser.get('https://meridianbet.com/#!standard_betting;leagueIDs=593')
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='gwt-Label home']")))
     return browser.page_source
-    (links, dates) = getLinksAndDates(browser.page_source)
-    htmls = []
-    for link in links:
-      element = browser.find_element_by_xpath("//*[contains(text(), '"+link+"')]")
-      element.click()
-      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//ul[@class='market_groups']")))
-      htmls.append(browser.page_source)
-    return dates, htmls
 
 def printSoup(soup):
   for a in soup:
