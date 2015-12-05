@@ -20,7 +20,7 @@ import util
 
 BOOKIE_NAME = "Wwin"
 BOOKIE_URL = "https://wwin.com/sports/default.aspx?t=-60#f/0/110/0/"
-TEST_FILE = "wwin.html"
+# TEST_FILE = "wwin.html"
 
 def main():
   html = getHtml(sys.argv)
@@ -30,14 +30,14 @@ def main():
 def getHtml(argv):
   if len(argv) > 1:
     if argv[1] != "save":
-      return open(TEST_FILE, encoding='utf8')
+      return open(util.TEST_FOLDER+'/'+BOOKIE_NAME.lower()+'.html', encoding='utf8')
     else:
       save()
   return selenium()
 
 def save():
   html = selenium()
-  f = open(TEST_FILE,'w')
+  f = open(util.TEST_FOLDER+"/"+BOOKIE_NAME.lower()+".html",'w')
   f.write(html)
   f.close()
   exit(0)

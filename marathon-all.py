@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import glob
 
 from bs4 import BeautifulSoup
 from contextlib import closing
@@ -20,7 +21,7 @@ import util
 
 BOOKIE_NAME = "Marathonbet"
 BOOKIE_URL = "https://www.marathonbet.com/hr/betting/Basketball/NBA/"
-TEST_FILE = "marathonbet.html"
+# TEST_FILE = "marathonbet.html"
 
 def main():
   dates, htmls = getHtml(sys.argv)
@@ -32,9 +33,32 @@ def main():
 
 def getHtml(argv):
   if len(argv) > 1:
-    return (['\n   06 pro 02:30\n    '], [open(TEST_FILE, encoding='utf8')])
-  else:
-    return selenium()
+    if argv[1] != "save":
+      return getFiles()
+      # return (['\n   06 pro 02:30\n    '], [open(TEST_FILE, encoding='utf8')])
+    else:
+      save()
+  return selenium()
+
+def getFiles():
+  files = []
+  dates = []
+  filenames = glob.glob(util.TEST_FOLDER+'/'+BOOKIE_NAME.lower()+'*.html')
+  for filename in filenames:
+    files.append(open(filename, encoding='utf8'))
+    dates.append('\n   06 pro 02:30\n    ')
+  return dates, files
+
+def save():
+  _, htmls = selenium()
+  i = 0
+  for html in htmls:
+    filename = util.TEST_FOLDER+"/"+BOOKIE_NAME.lower()+str(i)+".html"
+    f = open(filename,'w')
+    f.write(html)
+    f.close()
+    i += 1
+  exit(0)
 
 def selenium():
   with closing(Firefox()) as browser:

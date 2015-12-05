@@ -1,5 +1,7 @@
 from pprint import pprint
 
+TEST_FOLDER = "htmls"
+
 class Player:
   pass
 
