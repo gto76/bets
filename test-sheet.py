@@ -21,12 +21,10 @@ def main():
     writer = csv.writer(f)
     writer.writerows(worksheet.get_all_values())
 
-  with open('players.csv', "rt", encoding='utf8') as f:
-    reader = csv.reader(f)
-
-  for row in reader:
-    print(str(row))
-
+  worksheet = gc.open("lista igraca").get_worksheet(3)
+  with open("games.csv", 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerows(worksheet.get_all_values())
 
 if __name__ == '__main__':
   main()
