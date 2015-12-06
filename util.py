@@ -1,5 +1,10 @@
-from pprint import pprint
 import glob
+from pprint import pprint
+
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 TEST_FOLDER = "htmls"
 
@@ -44,3 +49,13 @@ def save(selenium, bookieName):
     f.close()
     i += 1
   exit(0)
+
+def waitAndClick(browser, identifier):
+  wait(browser, identifier)
+  click(browser, identifier)
+
+def wait(browser, identifier):
+  WebDriverWait(browser, timeout=20).until(EC.presence_of_element_located((By.XPATH, identifier)))
+
+def click(browser, identifier):
+  browser.find_element_by_xpath(identifier).click()
