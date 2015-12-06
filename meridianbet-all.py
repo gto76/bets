@@ -20,7 +20,6 @@ import util
 
 BOOKIE_NAME = "Meridianbet"
 BOOKIE_URL = "https://meridianbet.com/#!standard_betting;leagueIDs=593"
-# TEST_FILE = "meridianbet.html"
 
 def main():
   html = getHtml(sys.argv)

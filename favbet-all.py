@@ -21,7 +21,6 @@ import util
 
 BOOKIE_NAME = "Favbet"
 BOOKIE_URL = "https://www.favbet.com/en/bets/#tour=17745"
-# TEST_FILE = "favbet.html"
 
 def main():
   dates, htmls = getHtml(sys.argv)

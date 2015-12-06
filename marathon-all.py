@@ -21,7 +21,6 @@ import util
 
 BOOKIE_NAME = "Marathonbet"
 BOOKIE_URL = "https://www.marathonbet.com/hr/betting/Basketball/NBA/"
-# TEST_FILE = "marathonbet.html"
 
 def main():
   dates, htmls = getHtml(sys.argv)
@@ -35,7 +34,6 @@ def getHtml(argv):
   if len(argv) > 1:
     if argv[1] != "save":
       return getFiles()
-      # return (['\n   06 pro 02:30\n    '], [open(TEST_FILE, encoding='utf8')])
     else:
       save()
   return selenium()

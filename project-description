@@ -23,29 +23,33 @@ https://www.favbet.com/en/bets/#tour=17745&event=4198442
 
 !!!3. WWin: https://wwin.com/sports/#f/0/110/0/
 
+4. Meridianbet: https://meridianbet.com/#!standard_betting;leagueIDs=593
+
 ---
 
-4. Orakulas: http://orakulas.lt/nba NE NADZEM
+5. LSbet: https://www.lsbet.com/en-GB/sportsbook/eventpaths/multi/[223517]?utf8=%E2%9C%93&filter_options%5B%5D=450%7C209&commit=Refresh 
 
-5. Meridianbet: https://meridianbet.com/#!standard_betting;leagueIDs=593
+6. Betx: https://www.betx.sk/SportBetting 
 
-6. Bet top sport: https://www.bettopsport.com/odds/all/2/0/676 NE NADZEM
-event example: 
-https://www.bettopsport.com/odds/all/2/0/676/5000393
+7. William Hill: http://sports.williamhill.com/bet/en-gb/betting/t/266/NBA.html 
 
-7. Betfair: https://www.betfair.com/sport/basketball/event?eventId=27557166 ODDS IN PERCENTAGES
+===
+
+8. Betsafe: https://www.betsafe.com/en/odds#/#/Special/87 BEATIFULSOUP
+or https://apostas.dhoze.com/en/#/#/Special/87
+
+9. Orakulas: http://orakulas.lt/nba SELINIUM
+
+10. Betfair: https://www.betfair.com/sport/basketball/event?eventId=27557166 ODDS IN PERCENTAGES
 event example: 
 https://www.betfair.com/sport/basketball/event?eventId=27557168 FAIL
 
-====
+===
 
-9. LSbet: https://www.lsbet.com/en-GB/sportsbook/eventpaths/multi/[223517]?utf8=%E2%9C%93&filter_options%5B%5D=450%7C209&commit=Refresh NE NADZEM
+11. Bet top sport: https://www.bettopsport.com/odds/all/2/0/676 NE NADZEM
+event example: 
+https://www.bettopsport.com/odds/all/2/0/676/5000393
 
-10. Betsafe: https://www.betsafe.com/en/odds#/#/Special/87 ???
-
-11. Betx: https://www.betx.sk/SportBetting NE NADZEM
-
-12. William Hill: http://sports.williamhill.com/bet/en-gb/betting/t/266/NBA.html NE NADZEM
 
 There are 4 more bookies that need to be fetched however those are already available in a data table done by a freelancer that had to give up before finishing. He gave me links and passwords to data and mysql tables as well as the code, so fetching/scraping them shouldn't be a problem.
 

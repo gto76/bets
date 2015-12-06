@@ -20,7 +20,6 @@ import util
 
 BOOKIE_NAME = "Wwin"
 BOOKIE_URL = "https://wwin.com/sports/default.aspx?t=-60#f/0/110/0/"
-# TEST_FILE = "wwin.html"
 
 def main():
   html = getHtml(sys.argv)
