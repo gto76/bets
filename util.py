@@ -97,7 +97,7 @@ def getSheet(filename):
   with open(filename, "rt", encoding='utf8') as csvFile:
     sheet = csv.reader(csvFile)
     return list(sheet)
-    # 
+ 
 def getFullNameAndTime(name, surname):
   name = checkForExceptions(name)
   pattern = name+".* "+surname
