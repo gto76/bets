@@ -2,6 +2,7 @@ import csv
 import glob
 from pprint import pprint
 import re
+import time
 
 import pymysql.cursors
 from selenium.webdriver.common.action_chains import ActionChains
@@ -135,8 +136,8 @@ def insertPlayersInDb(players):
   try:
     with connection.cursor() as cursor:
       for player in players:
-        sql = "INSERT INTO `odds` (`bookie_name`, `bookie_url`, `start_time`, `player_name`, `player_total`, `over`, `under`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(sql, (player.bookie_name ,player.bookie_url ,player.start_time ,player.player_name ,player.player_total ,player.over ,player.under))
+        sql = "INSERT INTO `odds` (`bookie_name`, `bookie_url`, `start_time`, `player_name`, `player_total`, `over`, `under`, `date_time`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (player.bookie_name ,player.bookie_url ,player.start_time ,player.player_name ,player.player_total ,player.over ,player.under,  int(time.time())))
     connection.commit()
   finally:
     connection.close()  

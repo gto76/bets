@@ -27,6 +27,7 @@ def main():
   for html in htmls:
     players.extend(getPlayers(html))
   util.printPlayers(players)
+  util.insertPlayersInDb(players)
 
 def selenium():
   with closing(Firefox()) as browser:
