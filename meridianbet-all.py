@@ -26,8 +26,7 @@ def main():
   players = []
   for html in htmls:
     players.extend(getPlayers(html))
-  util.printPlayers(players)
-  util.insertPlayersInDb(players)
+  util.output(sys.argv, players)
 
 def selenium():
   with closing(Firefox()) as browser:

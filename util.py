@@ -54,6 +54,11 @@ def save(selenium, bookieName):
     i += 1
   exit(0)
 
+def output(argv, players):
+  printPlayers(players)
+  if len(argv) > 1:
+    insertPlayersInDb(players)
+
 ############
 # Selenium #
 ############
@@ -97,9 +102,11 @@ def getFullNameAndTime(name, surname):
   name = checkForExceptions(name)
   pattern = name+".* "+surname
   nameFull, team = getPlayersRow(pattern)
+  # C.J. McCollum to CJ McCollum
+  nameFull = re.sub('\.', '', nameFull)
   teamFull = getFullTeam(team)
-  time = getTime(teamFull)
-  return nameFull+" ("+team+")", time
+  time, pair = getTimeAndPair(teamFull)
+  return nameFull+" ("+pair+")", time
 
 def checkForExceptions(name):
   if name == "Dwane" or name == "Dwayne":
@@ -112,7 +119,7 @@ def getPlayersRow(pattern):
   for row in sheetPlayers:
     if re.match(pattern, row[1]):
       return row[1], row[2]
-  return "FAIL_NAME", "FAIL"
+  return "FAIL_NAME-"+pattern, "FAIL"
 
 def getFullTeam(team):
   checkSheets()
@@ -120,13 +127,23 @@ def getFullTeam(team):
     if row[1] == team:
       return row[0]
 
-def getTime(team):
+def getTimeAndPair(team):
   checkSheets()
   for row in sheetGames:
     if row[1] == team or row[2] == team:
       time = re.sub("\n", "", row[8])
-      return re.sub(" ", "", time)
-  return "FAIL"
+      time = re.sub(" ", "", time)
+      time = addSixHours(time)
+      pair = row[2]+" - "+row[1]
+      return time, pair
+  return "FAIL_TIME", "FAIL_PAIR"
+
+def addSixHours(time):
+  hours, minutes = time.split(':')
+  adjustedHours = int(hours) + 6
+  if adjustedHours > 12:
+    adjustedHours -= 12
+  return str(adjustedHours)+":"+minutes
 
 ###########
 # PyMySql #
