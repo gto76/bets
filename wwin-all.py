@@ -10,7 +10,8 @@ import sys
 
 from bs4 import BeautifulSoup
 from contextlib import closing
-from selenium.webdriver import Firefox 
+from selenium.webdriver import Firefox
+from selenium.webdriver import PhantomJS
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -29,7 +30,8 @@ def main():
   util.output(sys.argv, players)
 
 def selenium():
-  with closing(Firefox()) as browser:
+  # with closing(Firefox()) as browser:
+  with closing(PhantomJS()) as browser:
     browser.get(BOOKIE_URL)
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='item'][@fullok='430']")))
     element = browser.find_element_by_xpath("//div[@class='item'][@fullok='430']")

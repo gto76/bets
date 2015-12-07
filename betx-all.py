@@ -11,6 +11,7 @@ import sys
 from bs4 import BeautifulSoup
 from contextlib import closing
 from selenium.webdriver import Firefox
+from selenium.webdriver import PhantomJS
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -29,7 +30,8 @@ def main():
   util.output(sys.argv, players)
 
 def selenium():
-  with closing(Firefox()) as browser:
+  # with closing(Firefox()) as browser:
+  with closing(PhantomJS()) as browser:
     browser.get(BOOKIE_URL)
     util.waitAndClick(browser, "//li[@id='sportMenuItem_391']")
     util.waitAndClick(browser, "//li[@id='cId_2462']")
@@ -48,10 +50,6 @@ def getPlayers(html):
     odds = p.findAll("td", "ev_pick_cell")
     under = re.sub(",", ".", odds[0].find(text=True))
     over = re.sub(",", ".", odds[1].find(text=True))
-    # player = util.Player()
-    # player.nameAndPoints = nameAndPoints
-    # player.under = under
-    # player.over = over
     player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
