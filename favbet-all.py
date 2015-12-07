@@ -7,7 +7,6 @@ import json
 import os
 import re
 import sys
-import glob
 
 from bs4 import BeautifulSoup
 from contextlib import closing
@@ -23,40 +22,12 @@ BOOKIE_NAME = "Favbet"
 BOOKIE_URL = "https://www.favbet.com/en/bets/#tour=17745"
 
 def main():
-  dates, htmls = getHtml(sys.argv)
+  htmls = util.getHtml(sys.argv, selenium, BOOKIE_NAME)
   players = []
-  for date, html in zip(dates, htmls):
-    date = cleanDate(date)
-    players.extend(getPlayers(html, date))
-  util.printPlayers(players)
-
-def getHtml(argv):
-  if len(argv) > 1:
-    if argv[1] != "save":
-      return getFiles()
-    else:
-      save()
-  return selenium()
-
-def getFiles():
-  files = []
-  dates = []
-  filenames = glob.glob(util.TEST_FOLDER+'/'+BOOKIE_NAME.lower()+'*.html')
-  for filename in filenames:
-    files.append(open(filename, encoding='utf8'))
-    dates.append('\n   06 pro 02:30\n    ')
-  return dates, files
-
-def save():
-  _, htmls = selenium()
-  i = 0
   for html in htmls:
-    filename = util.TEST_FOLDER+"/"+BOOKIE_NAME.lower()+str(i)+".html"
-    f = open(filename,'w')
-    f.write(html)
-    f.close()
-    i += 1
-  exit(0)
+    players.extend(getPlayers(html))
+  util.printPlayers(players)
+  util.insertPlayersInDb(players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -69,7 +40,7 @@ def selenium():
       element.click()
       WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//ul[@class='market_groups']")))
       htmls.append(browser.page_source)
-    return dates, htmls
+    return htmls
 
 def getLinksAndDates(html):
   soup = BeautifulSoup(html, "html.parser")
@@ -83,7 +54,7 @@ def getLinksAndDates(html):
     dates.append(date)
   return (links, dates)
 
-def getPlayers(html, date):
+def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
   pl = soup.find("li", {"data-clue" : "Over/Under points (player)"})
   players = []
@@ -91,25 +62,22 @@ def getPlayers(html, date):
   odds = pl.findAll("button", "betbut a")
   for a, b in util.pairwise(zip(names, odds)):
     player = util.Player()
-    player.player_name = cleanName(a[0].find(text=True))
+    name, surname = cleanName(a[0].find(text=True))
+    fullName, time = util.getFullNameAndTime(name, surname)
+    player.player_name = fullName
     player.player_total = cleanPoints(a[0].find(text=True))
     player.under = a[1].find(text=True)
     player.over = b[1].find(text=True)
-    player.start_time = date
+    player.start_time = time
     player.bookie_name = BOOKIE_NAME
     player.bookie_url = BOOKIE_URL
     players.append(player)
   return players
-
-def cleanDate(date):
-  # date = re.sub("^\n *", "", date)
-  # return re.sub("\n *$", "", date)
-  return date
   
 def cleanName(name):
   name = re.sub("^Over [0-9()\. ]*", "", name)
   names = name.split(' ')
-  return names[1] + " " + names[0]
+  return names[0], names[1]
 
 def cleanPoints(points):
   points = re.sub("^.*\(", "", points)

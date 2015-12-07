@@ -94,11 +94,17 @@ def getSheet(filename):
     return list(sheet)
 
 def getFullNameAndTime(name, surname):
+  name = checkForExceptions(name)
   pattern = name+".* "+surname
   nameFull, team = getPlayersRow(pattern)
   teamFull = getFullTeam(team)
   time = getTime(teamFull)
   return nameFull+" ("+team+")", time
+
+def checkForExceptions(name):
+  if name == "Dwane" or name == "Dwayne":
+    return "Dwyane"
+  return name
 
 def getPlayersRow(pattern):
   global sheetPlayers
