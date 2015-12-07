@@ -21,25 +21,16 @@ import util
 BOOKIE_NAME = "Meridianbet"
 BOOKIE_URL = "https://meridianbet.com/#!standard_betting;leagueIDs=593"
 
+p = ""
+g = ""
+t = ""
+
 def main():
-  html = getHtml(sys.argv)
-  players = getPlayers(html)
+  htmls = util.getHtml(sys.argv, selenium, BOOKIE_NAME)
+  players = []
+  for html in htmls:
+    players.extend(getPlayers(html))
   util.printPlayers(players)
-
-def getHtml(argv):
-  if len(argv) > 1:
-    if argv[1] != "save":
-      return open(util.TEST_FOLDER+'/'+BOOKIE_NAME.lower()+'.html', encoding='utf8')
-    else:
-      save()
-  return selenium()
-
-def save():
-  html = selenium()
-  f = open(util.TEST_FOLDER+"/"+BOOKIE_NAME.lower()+".html",'w')
-  f.write(html)
-  f.close()
-  exit(0)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -61,14 +52,25 @@ def getPlayers(html):
 def getPlayer(date, time, a, b):
   odds = b.findAll("div", "gwt-Label")
   player = util.Player()
-  player.player_name = a.find("div", "gwt-Label away").find(text=True)
+  name, surname = getNameAndSurname(a.find("div", "gwt-Label away").find(text=True))
+  global p
+  global g
+  global t
+  fullName, time = util.getFullNameAndTime(name, surname)
+  player.player_name = fullName
   player.player_total = odds[7].find(text=True)
   player.under = odds[1].find(text=True)
   player.over = odds[5].find(text=True)
-  player.start_time = date.find(text=True)+" "+time.find(text=True)
+  player.start_time = time #date.find(text=True)+" "+time.find(text=True)
   player.bookie_name = BOOKIE_NAME
   player.bookie_url = BOOKIE_URL
   return player
+
+def getNameAndSurname(partialName):
+  partialName = re.sub(" \(.*\)$", "", partialName)
+  partialName = re.sub("\..*$", "", partialName)
+  names = partialName.split(' ')
+  return names[1], names[0]
 
 if __name__ == '__main__':
   main()
