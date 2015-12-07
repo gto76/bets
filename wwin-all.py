@@ -27,7 +27,7 @@ def main():
   for html in htmls:
     players.extend(getPlayers(html))
   util.printPlayers(players)
-  util.insertPlayersInDb(players)
+  #util.insertPlayersInDb(players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -40,7 +40,7 @@ def selenium():
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
-  parovi = soup.find("table", "parovi extra")
+  parovi = soup.findAll("table", "parovi extra")[1]
   pl = parovi.findAll("tr", {"ot" : re.compile("[0-9]*")})
   players = []
   for a in pl:
@@ -52,6 +52,7 @@ def getPlayer(a):
   odds = a.findAll("td", "tgp")
   player = util.Player()
   name, surname = cleanName(nameAndPoints)
+  # print(name, surname)
   fullName, time = util.getFullNameAndTime(name, surname)
   player.player_name = fullName
   player.player_total = cleanPoints(nameAndPoints)
@@ -65,8 +66,14 @@ def getPlayer(a):
 def cleanName(nameAndPoints):
   name = re.sub("^.*/", "", nameAndPoints)
   name = re.sub(" [().0-9]*$", "", name)
+  # print(name)
   names = name.split('.')
-  return names[0], names[-1]
+  if len(names) > 1:
+    # Must remove spaces form surname because of "D.De Rozan"
+    return names[0], re.sub(' ', '', names[-1])
+  else:
+    names = name.split(' ')
+    return names[0], names[1]
 
 def cleanPoints(nameAndPoints):
   points = re.sub("^.*\(", "", nameAndPoints)
