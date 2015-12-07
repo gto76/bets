@@ -21,10 +21,6 @@ import util
 BOOKIE_NAME = "Meridianbet"
 BOOKIE_URL = "https://meridianbet.com/#!standard_betting;leagueIDs=593"
 
-p = ""
-g = ""
-t = ""
-
 def main():
   htmls = util.getHtml(sys.argv, selenium, BOOKIE_NAME)
   players = []
