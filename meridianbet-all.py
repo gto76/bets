@@ -47,17 +47,11 @@ def getPlayers(html):
 
 def getPlayer(date, time, a, b):
   odds = b.findAll("div", "gwt-Label")
-  player = util.Player()
   name, surname = getNameAndSurname(a.find("div", "gwt-Label away").find(text=True))
-  fullName, time = util.getFullNameAndTime(name, surname)
-  player.player_name = fullName
-  player.player_total = odds[7].find(text=True)
-  player.under = odds[1].find(text=True)
-  player.over = odds[5].find(text=True)
-  player.start_time = time
-  player.bookie_name = BOOKIE_NAME
-  player.bookie_url = BOOKIE_URL
-  return player
+  points = odds[7].find(text=True)
+  under = odds[1].find(text=True)
+  over = odds[5].find(text=True)
+  return util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
 
 def getNameAndSurname(partialName):
   partialName = re.sub(" \(.*\)$", "", partialName)

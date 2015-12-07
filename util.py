@@ -59,6 +59,18 @@ def output(argv, players):
   if len(argv) < 2:
     insertPlayersInDb(players)
 
+def getPlayer(name, surname, points, under, over, bookieName, bookieUrl):
+  player = Player()
+  fullName, time = getFullNameAndTime(name, surname)
+  player.player_name = fullName
+  player.start_time = time
+  player.player_total = points
+  player.under = under
+  player.over = over
+  player.bookie_name = bookieName
+  player.bookie_url = bookieUrl
+  return player
+
 ############
 # Selenium #
 ############

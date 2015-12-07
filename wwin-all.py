@@ -39,7 +39,7 @@ def selenium():
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
-  parovi = soup.findAll("table", "parovi extra")[1]
+  parovi = soup.findAll("table", "parovi extra")[-1]
   pl = parovi.findAll("tr", {"ot" : re.compile("[0-9]*")})
   players = []
   for a in pl:
@@ -49,23 +49,15 @@ def getPlayers(html):
 def getPlayer(a):
   nameAndPoints = a.find("td", "parPar").find(text=True)
   odds = a.findAll("td", "tgp")
-  player = util.Player()
   name, surname = cleanName(nameAndPoints)
-  # print(name, surname)
-  fullName, time = util.getFullNameAndTime(name, surname)
-  player.player_name = fullName
-  player.player_total = cleanPoints(nameAndPoints)
-  player.under = re.sub(",", ".", odds[1].find(text=True))
-  player.over = re.sub(",", ".", odds[0].find(text=True))
-  player.start_time = time
-  player.bookie_name = BOOKIE_NAME
-  player.bookie_url = BOOKIE_URL
-  return player
+  points = cleanPoints(nameAndPoints)
+  under = re.sub(",", ".", odds[1].find(text=True))
+  over = re.sub(",", ".", odds[0].find(text=True))
+  return util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
 
 def cleanName(nameAndPoints):
   name = re.sub("^.*/", "", nameAndPoints)
   name = re.sub(" [().0-9]*$", "", name)
-  # print(name)
   names = name.split('.')
   if len(names) > 1:
     # Must remove spaces form surname because of "D.De Rozan"

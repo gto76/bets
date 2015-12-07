@@ -40,17 +40,11 @@ def getPlayers(html):
   pl = soup.findAll("span", "formatted_price")
   players = []
   for A, B in util.pairwise(zip(pll, pl)):
-    player = util.Player()
     name, surname = getNameAndSurname(A[0].find(text=True))
     points = getPoints(A[0].find(text=True))
-    fullName, time = util.getFullNameAndTime(name, surname)
-    player.player_name = fullName
-    player.player_total = points
-    player.under = A[1].find(text=True)
-    player.over = B[1].find(text=True)
-    player.start_time = time
-    player.bookie_name = BOOKIE_NAME
-    player.bookie_url = BOOKIE_URL
+    under = A[1].find(text=True)
+    over = B[1].find(text=True)
+    player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
 

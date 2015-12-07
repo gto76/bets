@@ -26,7 +26,7 @@ def main():
   players = []
   for html in htmls:
     players.extend(getPlayers(html))
-  util.printPlayers(players)
+  util.output(sys.argv, players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -43,15 +43,27 @@ def getPlayers(html):
   players = []
   for p in pll:
     nameAndPoints = p.find("span").find(text=True)
+    name, surname = getNames(nameAndPoints)
+    points = getPoints(nameAndPoints)
     odds = p.findAll("td", "ev_pick_cell")
-    under = odds[0].find(text=True)
-    over = odds[1].find(text=True)
-    player = util.Player()
-    player.nameAndPoints = nameAndPoints
-    player.under = under
-    player.over = over
+    under = re.sub(",", ".", odds[0].find(text=True))
+    over = re.sub(",", ".", odds[1].find(text=True))
+    # player = util.Player()
+    # player.nameAndPoints = nameAndPoints
+    # player.under = under
+    # player.over = over
+    player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
+
+def getNames(nameAndPoints):
+  name = re.sub(".*: ", "", nameAndPoints)
+  names = re.sub(" [^ ]*$", "", name).split(',')
+  return names[1].strip(), names[0].strip()
+
+def getPoints(nameAndPoints):
+  points = re.sub(".* \(", "", nameAndPoints)
+  return re.sub("\)", "", points)
 
 if __name__ == '__main__':
   main()

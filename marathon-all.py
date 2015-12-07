@@ -55,18 +55,13 @@ def getPlayers(html):
   players = []
   pl = soup.findAll("td", "price width30")
   for a, b in util.pairwise(pl):
-    player = util.Player()
     respA = json.loads(a["data-sel"])
     name, surname = cleanName(respA["mn"])
-    fullName, time = util.getFullNameAndTime(name, surname)
-    player.player_name = fullName
-    player.player_total = cleanPoints(respA["sn"])
-    player.under = "%.2f" % float(respA["epr"])
+    points = cleanPoints(respA["sn"])
+    under = "%.2f" % float(respA["epr"])
     respB = json.loads(b["data-sel"])
-    player.over = "%.2f" % float(respB["epr"])
-    player.start_time = time
-    player.bookie_name = BOOKIE_NAME
-    player.bookie_url = BOOKIE_URL
+    over = "%.2f" % float(respB["epr"])
+    player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
 

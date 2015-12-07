@@ -32,7 +32,7 @@ def selenium():
   with closing(Firefox()) as browser:
     browser.get(BOOKIE_URL)
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//b[@class='ttt']")))
-    (links, dates) = getLinksAndDates(browser.page_source)
+    links = getLinks(browser.page_source)
     htmls = []
     for link in links:
       element = browser.find_element_by_xpath("//*[contains(text(), '"+link+"')]")
@@ -41,17 +41,11 @@ def selenium():
       htmls.append(browser.page_source)
     return htmls
 
-def getLinksAndDates(html):
+def getLinks(html):
   soup = BeautifulSoup(html, "html.parser")
   pl = soup.findAll("ul", "sel-itm cl")
-  links = []
-  dates = []
   for p in pl:
-    link = p.find("li", "col0").find("span").find(text=True)
-    links.append(link)
-    date = p.find("li", "col1").find("span").find(text=True)
-    dates.append(date)
-  return (links, dates)
+    yield p.find("li", "col0").find("span").find(text=True)
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
@@ -60,16 +54,11 @@ def getPlayers(html):
   names = pl.findAll("span", "bets_oc ttt")
   odds = pl.findAll("button", "betbut a")
   for a, b in util.pairwise(zip(names, odds)):
-    player = util.Player()
     name, surname = cleanName(a[0].find(text=True))
-    fullName, time = util.getFullNameAndTime(name, surname)
-    player.player_name = fullName
-    player.player_total = cleanPoints(a[0].find(text=True))
-    player.under = a[1].find(text=True)
-    player.over = b[1].find(text=True)
-    player.start_time = time
-    player.bookie_name = BOOKIE_NAME
-    player.bookie_url = BOOKIE_URL
+    points = cleanPoints(a[0].find(text=True))
+    under = a[1].find(text=True)
+    over = b[1].find(text=True)
+    player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
   
