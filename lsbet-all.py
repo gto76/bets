@@ -26,7 +26,7 @@ def main():
   players = []
   for html in htmls:
     players.extend(getPlayers(html))
-  util.printPlayers(players)
+  util.output(sys.argv, players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -39,12 +39,30 @@ def getPlayers(html):
   pll = soup.findAll("span", "name ellipsis")
   pl = soup.findAll("span", "formatted_price")
   players = []
-  for a, b in zip(pll, pl):
+  for A, B in util.pairwise(zip(pll, pl)):
     player = util.Player()
-    player.a = a.find(text=True)
-    player.b = b.find(text=True)
+    name, surname = getNameAndSurname(A[0].find(text=True))
+    points = getPoints(A[0].find(text=True))
+    fullName, time = util.getFullNameAndTime(name, surname)
+    player.player_name = fullName
+    player.player_total = points
+    player.under = A[1].find(text=True)
+    player.over = B[1].find(text=True)
+    player.start_time = time
+    player.bookie_name = BOOKIE_NAME
+    player.bookie_url = BOOKIE_URL
     players.append(player)
   return players
+
+def getNameAndSurname(string):
+  name = re.sub(" -.*", "", string)
+  names = name.split(',')
+  firstName = names[1].strip().split(' ')[0]
+  surname = names[0]
+  return firstName, surname
+
+def getPoints(string):
+  return re.sub(".* ", "", string)
 
 if __name__ == '__main__':
   main()

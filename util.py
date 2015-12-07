@@ -16,8 +16,8 @@ class Player:
   pass
 
 def pairwise(t):
-    it = iter(t)
-    return zip(it,it)
+  it = iter(t)
+  return zip(it,it)
 
 def printSoup(soup):
   for a in soup:
@@ -97,7 +97,7 @@ def getSheet(filename):
   with open(filename, "rt", encoding='utf8') as csvFile:
     sheet = csv.reader(csvFile)
     return list(sheet)
-
+    # 
 def getFullNameAndTime(name, surname):
   name = checkForExceptions(name)
   pattern = name+".* "+surname
@@ -111,6 +111,8 @@ def getFullNameAndTime(name, surname):
 def checkForExceptions(name):
   if name == "Dwane" or name == "Dwayne":
     return "Dwyane"
+  if name == "Al-Faroug":
+    return "Al-Farouq"
   return name
 
 def getPlayersRow(pattern):
@@ -119,13 +121,14 @@ def getPlayersRow(pattern):
   for row in sheetPlayers:
     if re.match(pattern, row[1]):
       return row[1], row[2]
-  return "FAIL_NAME-"+pattern, "FAIL"
+  return "FAIL_NAME:"+pattern, "FAIL_TEAM"
 
 def getFullTeam(team):
   checkSheets()
   for row in sheetTeams:
     if row[1] == team:
       return row[0]
+  return "FAIL_TEAM"
 
 def getTimeAndPair(team):
   checkSheets()
@@ -136,7 +139,7 @@ def getTimeAndPair(team):
       time = addSixHours(time)
       pair = row[2]+" - "+row[1]
       return time, pair
-  return "FAIL_TIME", "FAIL_PAIR"
+  return "FAIL_TIME", "FAIL_MATCH"
 
 def addSixHours(time):
   hours, minutes = time.split(':')
