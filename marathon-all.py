@@ -56,15 +56,16 @@ def getPlayers(html):
   players = []
   pl = soup.findAll("td", "price width30")
   for a, b in util.pairwise(pl):
-    # McCollum Christian James -> C.J. McCollum
     player = util.Player()
     respA = json.loads(a["data-sel"])
-    player.player_name = cleanName(respA["mn"])
+    name, surname = cleanName(respA["mn"])
+    fullName, time = util.getFullNameAndTime(name, surname)
+    player.player_name = fullName
     player.player_total = cleanPoints(respA["sn"])
     player.under = respA["epr"]
     respB = json.loads(b["data-sel"])
     player.over = respB["epr"]
-    player.start_time = "NULL"
+    player.start_time = time
     player.bookie_name = BOOKIE_NAME
     player.bookie_url = BOOKIE_URL
     players.append(player)
@@ -72,7 +73,13 @@ def getPlayers(html):
 
 def cleanName(name):
   name = re.sub("Points \(", "", name)
-  return re.sub("[,)]", "", name)
+  name = re.sub("[,)]", "", name)
+  names = name.split(' ')
+  # McCollum Christian James -> C.J. McCollum
+  if len(names) == 3:
+    return names[1][0]+"."+names[2][0]+".", names[0]
+  else:
+    return names[1], names[0]
 
 def cleanPoints(points):
   return re.sub("^[^0-9]*", "", points)
