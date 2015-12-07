@@ -27,7 +27,7 @@ def main():
   for html in htmls:
     players.extend(getPlayers(html))
   util.printPlayers(players)
-  # util.insertPlayersInDb(players)
+  util.insertPlayersInDb(players)
 
 def selenium():
   with closing(Firefox()) as browser:
@@ -62,9 +62,9 @@ def getPlayers(html):
     fullName, time = util.getFullNameAndTime(name, surname)
     player.player_name = fullName
     player.player_total = cleanPoints(respA["sn"])
-    player.under = respA["epr"]
+    player.under = "%.2f" % float(respA["epr"])
     respB = json.loads(b["data-sel"])
-    player.over = respB["epr"]
+    player.over = "%.2f" % float(respB["epr"])
     player.start_time = time
     player.bookie_name = BOOKIE_NAME
     player.bookie_url = BOOKIE_URL

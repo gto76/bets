@@ -36,7 +36,7 @@ def selenium():
     element = browser.find_element_by_xpath("//div[@class='item'][@fullok='430']")
     element.click()
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='ex1 ex22']")))
-    return browser.page_source
+    return [browser.page_source]
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
