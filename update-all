@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Usage: update-all 
+# 
+
+# Stops execution if any command fails.
+set -eo pipefail
+
+main() {
+  ./get-sheets.py
+  ./wwin-all.py &
+  ./meridianbet-all.py &
+  ./favbet-all.py &
+  ./marathon-all.py &
+}
+
+main "$@"

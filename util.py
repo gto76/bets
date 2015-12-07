@@ -56,7 +56,7 @@ def save(selenium, bookieName):
 
 def output(argv, players):
   printPlayers(players)
-  if len(argv) > 1:
+  if len(argv) < 2:
     insertPlayersInDb(players)
 
 ############
