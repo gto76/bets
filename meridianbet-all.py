@@ -33,7 +33,7 @@ def selenium():
   with closing(Firefox()) as browser:
     browser.get(BOOKIE_URL)
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='gwt-Label home']")))
-    return browser.page_source
+    return [browser.page_source]
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
