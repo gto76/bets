@@ -26,11 +26,10 @@ sudo pip3 install gspread
 sudo pip3 install beautifulsoup4
 ```
 
-### Headless Firefox
+### With Headless Firefox
 ```
 sudo apt-get install xvfb
-sudo Xvfb :99 -ac
-
+DISPLAY=:99 xvfb-run -a ./wwin-all.py
 ```
 
 Project Description
