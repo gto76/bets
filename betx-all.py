@@ -30,8 +30,8 @@ def main():
   util.output(sys.argv, players)
 
 def selenium():
-  # with closing(Firefox()) as browser:
-  with closing(PhantomJS()) as browser:
+  with closing(Firefox()) as browser:
+  # with closing(PhantomJS()) as browser:
     browser.get(BOOKIE_URL)
     util.waitAndClick(browser, "//li[@id='sportMenuItem_391']")
     util.waitAndClick(browser, "//li[@id='cId_2462']")

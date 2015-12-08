@@ -26,6 +26,13 @@ sudo pip3 install gspread
 sudo pip3 install beautifulsoup4
 ```
 
+### Headless Firefox
+```
+sudo apt-get install xvfb
+sudo Xvfb :99 -ac
+
+```
+
 Project Description
 -------------------
 
