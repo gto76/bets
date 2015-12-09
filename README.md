@@ -20,7 +20,7 @@ sudo apt-get install python3-pip
 sudo pip3 install PyMySQL
 sudo pip3 install selenium
 sudo pip3 install oauth2client
-sudo apt-get install libssl-dev
+sudo apt-get install libssl-dev (, libffi-dev)
 sudo pip3 install PyOpenSSL
 sudo pip3 install gspread
 sudo pip3 install beautifulsoup4
