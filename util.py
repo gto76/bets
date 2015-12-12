@@ -165,9 +165,9 @@ def addSixHours(time):
 ###########
 
 def insertPlayersInDb(players):
-  connection = pymysql.connect(host='denis.afiniti.org',
-                               user='denis',
-                               password='Klada1977&',
+  connection = pymysql.connect(host='localhost',
+                               user='root',
+                               password='avioni',
                                db='odds',
                                charset='utf8mb4',
                                cursorclass=pymysql.cursors.DictCursor)

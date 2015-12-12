@@ -15,7 +15,11 @@ if (!file_exists(path . '/html')) {
 }
 
 /* clear obsolote records */
-$dbh->query("DELETE FROM odds WHERE date_time < (" . (time() - obsolete_time) . ")") or die ($dbh->error . ' in ' . __FILE__ . ' line ' . __LINE__);
+//$dbh->query("DELETE FROM odds WHERE date_time < (" . (time() - obsolete_time) . ")") or die ($dbh->error . ' in ' . __FILE__ . ' line ' . __LINE__);
+$dbh->query("TRUNCATE TABLE `odds`") or die ($dhb->error . ' in ' . __FILE__ . ' line ' . __LINE__);
+
+/* Python scripts */
+$exec = shell_exec('cd ..; ./run-all');
 
 /* -> planetwin365 */
 
