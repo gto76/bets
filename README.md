@@ -12,6 +12,13 @@ sudo apt-get install mysql-server
 sudo apt-get install php5 php-pear php5-mysql
 ```
 
+### PHP5 libraries
+```
+sudo apt-get install php5-curl
+
+```
+
+
 ### Python libraries
 ```
 sudo apt-get install python3
@@ -30,6 +37,57 @@ sudo pip3 install beautifulsoup4
 ```
 sudo apt-get install xvfb
 DISPLAY=:99 xvfb-run -a ./wwin-all.py
+```
+
+### Import sql dump into MySql database
+```
+mysql -u root -p
+> create database odds
+> exit
+mysql -u root -p -h localhost odds < db/dump.sql
+```
+
+Change database user and password in config.php, line 25
+Change database user and password in util.py, line 170
+
+
+### For php mkdir() function to work
+Make sure all files are owned by the Apache group and user. In Ubuntu it is the www-data group and user
+
+chown -R www-data:www-data /path/to/webserver/www
+
+Next enabled all members of the www-data group to read and write files
+
+chmod -R g+rw /path/to/webserver/www
+
+### Make phantomjs libraries executable
+```
+sudo chmod a+x phantomjs-*
+```
+
+### Make all python scripts executable
+
+### Configuring different sites
+Create a new settings file for your new site.
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/site1.conf
+
+Next, edit this settings file.
+sudoedit /etc/apache2/sites-available/site1.conf
+Change DocumentRoot /var/www to DocumentRoot /home/user/public_html.
+
+Set server name.
+
+# Set access permission
+<Directory />
+        Require all granted
+</Directory>
+
+Disable the default setting and make active the site1 settings
+sudo a2dissite default && sudo a2ensite site1.conf
+
+### Restart apache
+```
+sudo systemctl restart apache2
 ```
 
 Project Description
