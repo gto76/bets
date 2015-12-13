@@ -56,8 +56,8 @@ def getPlayers(html):
   for a, b in util.pairwise(zip(names, odds)):
     name, surname = cleanName(a[0].find(text=True))
     points = cleanPoints(a[0].find(text=True))
-    under = a[1].find(text=True)
-    over = b[1].find(text=True)
+    over = a[1].find(text=True)
+    under = b[1].find(text=True)
     player = util.getPlayer(name, surname, points, under, over, BOOKIE_NAME, BOOKIE_URL)
     players.append(player)
   return players
