@@ -112,14 +112,14 @@ if (method_exists($html, 'find')) {
 										$points = 0;
 									}
 									if ($tr->find('td', 2)) {
-										$over = (float)$tr->find('td', 2)->plaintext;
-									} else {
-										$over = 0;
-									}
-									if ($tr->find('td', 3)) {
-										$under = (float)$tr->find('td', 3)->plaintext;
+										$under = (float)$tr->find('td', 2)->plaintext;
 									} else {
 										$under = 0;
+									}
+									if ($tr->find('td', 3)) {
+										$over = (float)$tr->find('td', 3)->plaintext;
+									} else {
+										$over = 0;
 									}
 									if (!empty($player) && !empty($bookie_name) && $points > 0 && $over > 0 && $under > 0) {
 										$qd = $dbh->query("SELECT * FROM odds WHERE bookie_url = '$bookie_url' AND player_name = '$player' AND start_time = '$time'") or die ($dbh->error . ' in ' . __FILE__ . ' line ' . __LINE__);
@@ -156,7 +156,8 @@ if (method_exists($html, 'find')) {
 			$i = 0;
 			foreach ($tournament_table->find('tr.event-row') as $tr) {
 				$time = trim($tr->find('td', 1)->plaintext);
-				$player = $dbh->real_escape_string($tr->find('td', 2)->plaintext);
+				#$player = $dbh->real_escape_string($tr->find('td', 2)->plaintext);
+                                $player = trim($tr->find('td', 2)->plaintext);
 				$players[$i]['time'] = $time;
 				$players[$i]['player'] = $player;
 				$i++;
