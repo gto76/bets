@@ -31,13 +31,13 @@ def main():
 def selenium():
   with closing(Firefox()) as browser:
     browser.get(BOOKIE_URL)
-    WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
+    WebDriverWait(browser, timeout=30).until(EC.presence_of_element_located((By.XPATH, "//div[@class='member-name nowrap ']")))
     dates = getDates(browser.page_source)
     elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
     htmls = []
     for e in elements[::2]:
       e.click()
-      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
+      WebDriverWait(browser, timeout=30).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table-shortcuts-menu']")))
       htmls.append(browser.page_source)
       e.click()
     return htmls
