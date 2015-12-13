@@ -24,8 +24,8 @@ if (system_architecture == 'x86_64') {
 	define('phantomjs', path . '/phantomjs-i686');
 }
 define('DB_HOST', 'localhost');
-define('DB_USER', 'denis');
-define('DB_PASSWORD', 'Klada1977&');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'avioni');
 define('DB_NAME', 'odds');
 define('obsolete_time', 12*3600);
 /* <- define functional variables */
