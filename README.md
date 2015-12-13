@@ -77,17 +77,36 @@ Change DocumentRoot /var/www to DocumentRoot /home/user/public_html.
 
 Set server name.
 
-# Set access permission
+### Set access permission, and set index.php to be default page.
 <Directory />
-        Require all granted
+  Require all granted
+  DirectoryIndex index.php
 </Directory>
 
-Disable the default setting and make active the site1 settings
+### Disable the default setting and make active the site1 settings
+```
 sudo a2dissite default && sudo a2ensite site1.conf
+```
 
 ### Restart apache
 ```
 sudo systemctl restart apache2
+```
+
+### Execute command as www-data (for debuging)
+```
+sudo -u www-data python <script>
+```
+
+### If you get: CryptoUnavailableError
+```
+sudo pip3 install -I pyOpenSSl
+```
+
+### Make run-all executable as sudo for www-data
+Open /etc/sudoers and insert the following line at the end of the file
+```
+www-data ALL=NOPASSWD: <path to run-all>/run-all
 ```
 
 Project Description
