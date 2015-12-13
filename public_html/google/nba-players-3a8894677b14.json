@@ -1,0 +1,11 @@
+{
+  "type": "service_account",
+  "private_key_id": "3a8894677b14a0df75eb70d7862a9adec06f1595",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxYrf9CMFg5cZb\nnztjygPAsWrW2BwryCZyH/9+vDuJUzJmvyjJGqH+/uwWg7EHLr0Lb+CWDUbIuCLZ\nUClZ2HIKogRCEDyKmFbqhIc+fFNmIQ3Qw2s9SGuDD4wY8ALBR+K9ghyDwREPNHiZ\nquznWVRuHqK87Qp4ASPvUGaJL+TyIRD965ps/GJpDSfQHSBKk7RFuwH3juHPbv6T\nxr1TLvB/T2e/8KpgpzvwbDJpwAwPDorPQllZ/UpZxKLW6Dqhoc+02hFVPM/Zjj8H\n4kBEOrvcqSMYdz6AYRbgwYEvR12MxeB4ktx/fmSS+uAHNhgOdSeEE0wMEKr9uvfC\nnjiV/5QjAgMBAAECggEAYgxgCLRLN4UqhEBasojaVCt9E642vBiQ76oyLlpbSke7\nZ0GoiKh4/Jrp4nP+aSrzgZvgdvB1vMLTOG1vveK+/pOZaO7SmAUmndCNdQOBkcUZ\nfthVsXUTQElatfoMe8uBUCDYJBeWl2H4e3AYLLSaz5eNeoJHtBdlRoWZd6EKmq6y\naii2XSSsH+arbQFzMnxTTfif1S+rY75i3H+JIHS9U5UqpTWONuvzerhMdn5XAhju\nQxwXmGUH7Y3+58WvbIJVqmaxG5aZubbJUN9zjedjTXo7/OHwz9DPa3h/5ubE6t7R\n48GSlSrdNtzruQ8Yti3pQOQEBbuJchR3O6ZClSEjeQKBgQDg8BqjukFwHX5RS892\nO15PGrv/Z3tBJcWoTl7TL/NIfJ7cbSix4aSS3ZGPD2Pzi2nscppuygxQ8wB7TqeS\n11IohgUxHDCwsXd4+f6h4k4q2TzFQRvUUzh5nitnaWVAng7a2rYt+WE7xaBhHONM\nw0+GYaeGFLdSqjwI76CxyleAtwKBgQDJ4ZG5l2GE/Jfo25opmqK6thEm+RhPFDuI\nnBmxeZW/SWewg5dRoMvYrcxgLuKjxbZapW3Fg5AKsKpxDu/veAoc9JVRuueMTaVp\noMxi+axG6tykks0aUlj6ke1uawEzp75UsuA4SehPYe2OAN5E189ho643ofglIP0w\nTj+bnnrD9QKBgHUrXRUQPmoCUvxR+x1hS3z1NhyScNe8rzs+p5JmldmaYL39dodC\nPJHsLJhSsgP5CRILmHpBcSzxh7yzegK5eqh1N1sfjhVcPBmeT49P7NvRESDHC5IM\nT4y6YW2arw17x80kxGUqVAXoqeQsQhKIYnJjh/oF7IB5AJC/EfvKpM39AoGBAKHG\n92ZIX0eYu4tI38NTPfBtklUu7EICrqqMnTJRgqTliAg1i39IYdJjhBHXwJsJB1ag\nltTe1wEaDZvIIpI+GayWe0ohgwg1+MYqq17tQRcbgnEHiwD62H8DjcccTLw+QhHR\nvkidQWLL0PgozfVRE8jkx+mhDB+EziB1tBda6no5AoGAJx2yvZ5KiFr/+0GIpYPV\ngqdLyqixTdlUGF5tBA9ja1r3SHmxdT2m9Ck3DVGrQPXUs+mgi4EBA6CNEuebgyom\nC805xu28lgXTPyKR43T0uRDzGPEAFS/DhomzORdQcYKiRx3c8TCb7hlGilJmBodm\njqkRbWWO0wOLBbbjnPzr5WY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "account-1@nba-players.iam.gserviceaccount.com",
+  "client_id": "102277440752614164305",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/account-1%40nba-players.iam.gserviceaccount.com"
+}

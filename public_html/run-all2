@@ -7,7 +7,7 @@
 set -eo pipefail
 
 main() {
-  ./get-sheets.py
+  #DISPLAY=:99 xvfb-run -a ./get-sheets.py
 
   DISPLAY=:99 xvfb-run -a ./wwin-all.py &
   DISPLAY=:99 xvfb-run -a ./meridianbet-all.py &
