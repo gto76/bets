@@ -29,7 +29,7 @@ def printPlayers(players):
     pprint (vars(p))
 
 def getHtml(argv, selenium, bookieName):
-  if len(argv) > 1:
+  if len(argv) > 1 and argv[1] != "test":
     if argv[1] != "save":
       return getFiles(bookieName)
     else:

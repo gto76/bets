@@ -60,17 +60,18 @@ def selenium():
     htmls = []
     browser.get(BOOKIE_URL)
     WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='extra-events']")))
-    for i in range(5):
+    for i in [2]:
       # browser.refresh()
       elements = browser.find_elements_by_xpath("//span[@class='extra-events']")
       # icons other icon-other-gourmands
       e = elements[i]
       e.click()
-      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='event-outcomes']")))
+      # WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='event-outcomes']")))
+      WebDriverWait(browser, timeout=10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='extra-events selected']")))
       htmls.append(browser.page_source)
       element = browser.find_element_by_xpath("//span[@class='extra-events selected']")
       element.click()
-      WebDriverWait(browser, timeout=10).until(EC.invisibility_of_element_located((By.XPATH, "//div[@class='event-outcomes']")))
+      WebDriverWait(browser, timeout=10).until(EC.invisibility_of_element_located((By.XPATH, "//div[@class='subgroup-header with-hover with-extra-icons extra-icons-small']")))
     return htmls
 
 # def getNumberOfLinks():
@@ -105,6 +106,7 @@ def getPlayers(html):
     onclick = a["onclick"]
     onclick = re.sub("^[^{]*{[^{]*", "", onclick)
     onclick = re.sub("[^}]*}$", "", onclick)
+    #print(onclick)
     resp = json.loads(onclick)
     if "Player total" in resp["alt_name"]:
       playersJson.append(resp)

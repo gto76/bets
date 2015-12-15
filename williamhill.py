@@ -32,9 +32,24 @@ def selenium():
   with closing(Firefox()) as browser:
     browser.get(BOOKIE_URL)
     util.wait(browser, "//div[@id='contentHead']")
+    #elements = browser.find_elements_by_xpath("//div[@class='member-name nowrap ']")
     links = getMatchLinks(browser.page_source)
+    htmls = []
+    for link in links:
+      browser.get(link)
+      util.waitAndClick(browser, "//span[@class='inside', matches(@text, '*Player Performance*')]")
+      util.wait(browser, "//div[@class='marketHolderExpanded']")
+      htmls.append(browser.page_source)
+    return htmls
 
 
+def getMatchLinks(html):
+  soup = BeautifulSoup(html, "html.parser")
+  # regex = re.compile('[0-9]*_mkt_namespace')
+  games = soup.findAll("tr", "rowOdd")
+  for game in games:
+    href = game.find('a', href=True)
+    yield href["href"]
 
 def getPlayers(html):
   soup = BeautifulSoup(html, "html.parser")
