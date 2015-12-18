@@ -61,8 +61,9 @@ def output(argv, players):
 
 def getPlayer(name, surname, points, under, over, bookieName, bookieUrl):
   player = Player()
-  fullName, time = getFullNameAndTime(name, surname)
+  fullName, teams, time = getFullNameTeamsAndTime(name, surname)
   player.player_name = fullName
+  player.teams = teams
   player.start_time = time
   player.player_total = points
   player.under = under
@@ -110,7 +111,7 @@ def getSheet(filename):
     sheet = csv.reader(csvFile)
     return list(sheet)
  
-def getFullNameAndTime(name, surname):
+def getFullNameTeamsAndTime(name, surname):
   name = checkForExceptions(name)
   pattern = name+".* "+surname
   nameFull, team = getPlayersRow(pattern)
@@ -118,7 +119,7 @@ def getFullNameAndTime(name, surname):
   nameFull = re.sub('\.', '', nameFull)
   teamFull = getFullTeam(team)
   time, pair = getTimeAndPair(teamFull)
-  return nameFull+" ("+pair+")", time
+  return nameFull, pair, time
 
 def checkForExceptions(name):
   if name == "Dwane" or name == "Dwayne":
@@ -174,8 +175,8 @@ def insertPlayersInDb(players):
   try:
     with connection.cursor() as cursor:
       for player in players:
-        sql = "INSERT INTO `odds` (`bookie_name`, `bookie_url`, `start_time`, `player_name`, `player_total`, `over`, `under`, `date_time`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(sql, (player.bookie_name ,player.bookie_url ,player.start_time ,player.player_name ,player.player_total ,player.over ,player.under,  int(time.time())))
+        sql = "INSERT INTO `odds` (`bookie_name`, `bookie_url`, `start_time`, `player_name`, `player_total`, `over`, `under`, `date_time`, `teams`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (player.bookie_name ,player.bookie_url ,player.start_time ,player.player_name ,player.player_total ,player.over ,player.under,  int(time.time()), player.teams))
     connection.commit()
   finally:
     connection.close()  
