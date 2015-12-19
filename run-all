@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Usage: update-all 
-# 
+#
 
 # Stops execution if any command fails.
 set -eo pipefail
@@ -11,22 +11,13 @@ main() {
 
   DISPLAY=:99 xvfb-run -a ./wwin-all.py &
   DISPLAY=:99 xvfb-run -a ./meridianbet-all.py &
-wait
+  wait
   DISPLAY=:99 xvfb-run -a ./favbet-all.py &
   DISPLAY=:99 xvfb-run -a ./marathon-all.py &
-wait
+  wait
   DISPLAY=:99 xvfb-run -a ./lsbet-all.py &
   DISPLAY=:99 xvfb-run -a ./betx-all.py &
-wait
-
-  #DISPLAY=:99 xvfb-run -a ./wwin-all.py
-  #DISPLAY=:99 xvfb-run -a ./meridianbet-all.py
-  #DISPLAY=:99 xvfb-run -a ./favbet-all.py
-  #DISPLAY=:99 xvfb-run -a ./marathon-all.py
-  #DISPLAY=:99 xvfb-run -a ./lsbet-all.py
-  #DISPLAY=:99 xvfb-run -a ./betx-all.py
-
-  #wait 
+  wait
 }
 
 main "$@"
