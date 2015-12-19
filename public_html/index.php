@@ -75,20 +75,23 @@ if (!isset($_GET[secret])) {
 						<label>Sorting criteria:</label>
 						<select name="sort0" class="form-control">
 							<option value="player_name"'; if (isset($_GET['sort0']) && $_GET['sort0'] == 'player_name') { echo ' selected="selected"'; } echo '>Player Name</option>
+							<option value="teams"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'teams')  { echo ' selected="selected"'; } echo '>Team</option>
 							<option value="start_time"'; if (isset($_GET['sort0']) && $_GET['sort0'] == 'start_time') { echo ' selected="selected"'; } echo '>Start Time</option>
 							<option value="bookie_name"'; if (isset($_GET['sort0']) && $_GET['sort0'] == 'bookie_name') { echo ' selected="selected"'; } echo '>Bookie</option>
 							<option value="player_total"'; if (isset($_GET['sort0']) && $_GET['sort0'] == 'player_total') { echo ' selected="selected"'; } echo '>Total points</option>
 						</select>
 						<br>
 						<select name="sort1" class="form-control">
-							<option value="player_name"'; if (isset($_GET['sort1']) && $_GET['sort1'] == 'player_name') { echo ' selected="selected"'; } echo '>Player Name</option>
-							<option value="start_time"'; if (isset($_GET['sort1']) && $_GET['sort1'] == 'start_time') { echo ' selected="selected"'; } echo '>Start Time</option>
-							<option value="bookie_name"'; if (isset($_GET['sort1']) && $_GET['sort1'] == 'bookie_name') { echo ' selected="selected"'; } echo '>Bookie</option>
+							<option value="player_name"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'player_name')  { echo ' selected="selected"'; } echo '>Player Name</option>
+							<option value="teams"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'teams')  { echo ' selected="selected"'; } echo '>Team</option>
+							<option value="start_time"';   if (isset($_GET['sort1']) && $_GET['sort1'] == 'start_time')   { echo ' selected="selected"'; } echo '>Start Time</option>
+							<option value="bookie_name"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'bookie_name')  { echo ' selected="selected"'; } echo '>Bookie</option>
 							<option value="player_total"'; if (isset($_GET['sort1']) && $_GET['sort1'] == 'player_total') { echo ' selected="selected"'; } echo '>Total points</option>
 						</select>
 						<br>
 						<select name="sort2" class="form-control">
 							<option value="player_name"'; if (isset($_GET['sort2']) && $_GET['sort2'] == 'player_name') { echo ' selected="selected"'; } echo '>Player Name</option>
+							<option value="teams"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'teams')  { echo ' selected="selected"'; } echo '>Team</option>
 							<option value="start_time"'; if (isset($_GET['sort2']) && $_GET['sort2'] == 'start_time') { echo ' selected="selected"'; } echo '>Start Time</option>
 							<option value="bookie_name"'; if (isset($_GET['sort2']) && $_GET['sort2'] == 'bookie_name') { echo ' selected="selected"'; } echo '>Bookie</option>
 							<option value="player_total"'; if (isset($_GET['sort2']) && $_GET['sort2'] == 'player_total') { echo ' selected="selected"'; } echo '>Total points</option>
@@ -96,6 +99,7 @@ if (!isset($_GET[secret])) {
 						<br>
 						<select name="sort3" class="form-control">
 							<option value="player_name"'; if (isset($_GET['sort3']) && $_GET['sort3'] == 'player_name') { echo ' selected="selected"'; } echo '>Player Name</option>
+							<option value="teams"';  if (isset($_GET['sort1']) && $_GET['sort1'] == 'teams')  { echo ' selected="selected"'; } echo '>Team</option>
 							<option value="start_time"'; if (isset($_GET['sort3']) && $_GET['sort3'] == 'start_time') { echo ' selected="selected"'; } echo '>Start Time</option>
 							<option value="bookie_name"'; if (isset($_GET['sort3']) && $_GET['sort3'] == 'bookie_name') { echo ' selected="selected"'; } echo '>Bookie</option>
 							<option value="player_total"'; if (isset($_GET['sort3']) && $_GET['sort3'] == 'player_total') { echo ' selected="selected"'; } echo '>Total points</option>
@@ -116,7 +120,7 @@ if (!isset($_GET[secret])) {
 						<th>Bookie</th>
 						<th>Time</th>
 						<th>Player</th>
-						<th>Team</th>
+						<th>Match</th>
 						<th>Points</th>
 						<th>Over</th>
 						<th>Under</th>
