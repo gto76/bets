@@ -40,10 +40,6 @@ def getPlayers(html):
   pl = soup.findAll("span", "formatted_price")
   players = []
   for A, B in util.pairwise(zip(pll, pl)):
-    print(A[0].find(text=True))
-    print(A[1].find(text=True))
-    print(B[0].find(text=True))
-    print(B[1].find(text=True))
     name, surname = getNameAndSurname(A[0].find(text=True))
     points = getPoints(A[0].find(text=True))
     under = A[1].find(text=True)
@@ -54,7 +50,6 @@ def getPlayers(html):
 
 def getNameAndSurname(string):
   name = re.sub(" -.*", "", string)
-  print(name)
   names = name.split(',')
   firstName = names[1].strip().split(' ')[0]
   surname = names[0]
