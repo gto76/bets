@@ -160,6 +160,8 @@ def addSixHours(time):
   adjustedHours = int(hours) + 6
   if adjustedHours > 12:
     adjustedHours -= 12
+  else:
+    adjustedHours += 12
   return str(adjustedHours)+":"+minutes
 
 ###########
