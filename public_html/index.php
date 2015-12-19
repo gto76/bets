@@ -116,7 +116,7 @@ if (!isset($_GET[secret])) {
 						<th>Bookie</th>
 						<th>Time</th>
 						<th>Player</th>
-						<th>Match</th>
+						<th>Team</th>
 						<th>Points</th>
 						<th>Over</th>
 						<th>Under</th>
