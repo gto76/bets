@@ -32,6 +32,7 @@ CREATE TABLE `odds` (
   `over` float(11,2) DEFAULT NULL,
   `under` float(11,2) DEFAULT NULL,
   `date_time` int(11) DEFAULT NULL,
+  `teams` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

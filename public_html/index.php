@@ -116,6 +116,7 @@ if (!isset($_GET[secret])) {
 						<th>Bookie</th>
 						<th>Time</th>
 						<th>Player</th>
+						<th>Match</th>
 						<th>Points</th>
 						<th>Over</th>
 						<th>Under</th>
@@ -132,6 +133,7 @@ if (!isset($_GET[secret])) {
 						</td>
 						<td>' . $ro['start_time'] . '</td>
 						<td>' . $ro['player_name'] . '</td>
+						<td>' . $ro['teams'] . '</td>
 						<td>' . $ro['player_total'] . '</td>
 						<td>' . $ro['over'] . '</td>
 						<td>' . $ro['under'] . '</td>
