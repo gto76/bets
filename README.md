@@ -1,8 +1,8 @@
 Nba Players
 ===========
 
-How to run on Linux
--------------------
+How to set up on Linux
+----------------------
 
 ### LAMP stack
 ```
@@ -108,6 +108,29 @@ Open /etc/sudoers and insert the following line at the end of the file
 ```
 www-data ALL=NOPASSWD: <path to run-all>/run-all
 ```
+
+How to run all python scrapers
+------------------------------
+```
+sudo ./run-all
+```
+
+How to run single scraper
+-------------------------
+#### On system with Xwindows (to see what firefox is doing):
+```
+./wwin-all
+```
+#### On server
+```
+sudo DISPLAY=:99 xvfb-run -a ./wwin-all
+```
+
+Single scraper options
+-----------------------
+test - only print scraped players (do not insert in database)
+save - only save html page(s) in htmls directory
+<some-string> - parse pages stored in htmls directory
 
 Project Description
 -------------------

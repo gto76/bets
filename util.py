@@ -119,7 +119,8 @@ def getFullNameTeamsAndTime(name, surname):
   nameFull = re.sub('\.', '', nameFull)
   teamFull = getFullTeam(team)
   time, pair = getTimeAndPair(teamFull)
-  return nameFull, pair, time
+  # Instead of pair of teams it returns only players team (as wished by investor).
+  return nameFull, teamFull, time 
 
 def checkForExceptions(name):
   if name == "Dwane" or name == "Dwayne":
