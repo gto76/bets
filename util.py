@@ -178,7 +178,7 @@ def insertPlayersInDb(players):
   try:
     with connection.cursor() as cursor:
       for player in players:
-        sql = "CALL LoadBets4Old(`bookie_name`, `bookie_url`, `start_time`, `player_name`, `player_total`, `over`, `under`, `date_time`, `teams`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "CALL LoadBets4Old(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(sql, (player.bookie_name ,player.bookie_url ,player.start_time ,player.player_name ,player.player_total ,player.over ,player.under,  int(time.time()), player.teams))
     connection.commit()
   finally:
